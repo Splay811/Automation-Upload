@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Automation Upload</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAFAFC;
+    --surface: #FFFFFF;
+    --text-primary: #14162B;
+    --text-secondary: #5B5F77;
+    --border: #E3E4EE;
+    --accent: #4338CA;
+    --accent2: #0EA5E9;
+    --font-head: "Archivo", "Segoe UI", Arial, sans-serif;
+    --font-body: "Inter", "Segoe UI", Arial, sans-serif;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0B0C14;
+      --surface: #14162A;
+      --text-primary: #F3F4FA;
+      --text-secondary: #A8ABC2;
+      --border: #262841;
+      --accent: #8B85F0;
+      --accent2: #38BDF8;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0B0C14;
+    --surface: #14162A;
+    --text-primary: #F3F4FA;
+    --text-secondary: #A8ABC2;
+    --border: #262841;
+    --accent: #8B85F0;
+    --accent2: #38BDF8;
+  }
+  html { scroll-padding-top: 84px; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); }
+  header.nav {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    background: var(--bg);
+    border-bottom: 0.5px solid var(--border);
+    z-index: 10;
+  }
+  .nav-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    color: var(--text-primary);
+  }
+  .brand svg { display: block; }
+  nav.links {
+    display: flex;
+    gap: 22px;
+    flex-wrap: wrap;
+  }
+  nav.links a {
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--text-secondary);
+  }
+  nav.links a:hover { color: var(--accent); }
+
+  main { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+
+  section { padding: 64px 0; border-bottom: 0.5px solid var(--border); }
+  section:last-of-type { border-bottom: none; }
+
+  .hero h1 {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: clamp(34px, 6vw, 48px);
+    line-height: 1.08;
+    margin: 0 0 18px;
+    letter-spacing: -0.01em;
+  }
+  .hero .lede {
+    font-size: 19px;
+    color: var(--text-secondary);
+    max-width: 58ch;
+    margin: 0 0 20px;
+  }
+  .hero p { max-width: 66ch; }
+
+  h2 {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 26px;
+    margin: 0 0 28px;
+  }
+  h3 {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 16px;
+    margin: 0 0 8px;
+  }
+
+  .steps { display: flex; flex-direction: column; gap: 22px; }
+  .step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .step .n {
+    flex: none;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .step p { margin: 4px 0 0; color: var(--text-secondary); max-width: 60ch; }
+
+  .who {
+    margin-top: 36px;
+    padding: 20px 22px;
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+  }
+  .who p { margin: 0; color: var(--text-secondary); }
+
+  .legal p, .legal li { color: var(--text-secondary); max-width: 68ch; }
+  .legal ul { padding-left: 20px; }
+  .legal h3 { color: var(--text-primary); margin-top: 26px; }
+  .updated { font-size: 13px; color: var(--text-secondary); margin: -18px 0 26px; }
+
+  footer {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 40px 20px 60px;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  @media (max-width: 480px) {
+    nav.links { gap: 14px; }
+    section { padding: 44px 0; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#overview">
+      <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="11" fill="var(--accent)"/><path d="M11 6 L15 11 L12.3 11 L12.3 16 L9.7 16 L9.7 11 L7 11 Z" fill="white"/></svg>
+      Automation Upload
+    </a>
+    <nav class="links">
+      <a href="#overview">Overview</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="#privacy">Privacy</a>
+      <a href="#terms">Terms</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section id="overview" class="hero">
+    <h1>Automation Upload</h1>
+    <p class="lede">A desktop tool that turns a short topic into a finished vertical video — script, voiceover, and captions — held for review before anything is published.</p>
+    <p>Automation Upload runs locally on the creator's own computer. It writes a short script for a chosen topic, generates a voiceover, and assembles a captioned, vertical-format video. Every video is saved to a local folder first; nothing is published until the creator reviews and approves it.</p>
+  </section>
+
+  <section id="how-it-works">
+    <h2>How it works</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="n">1</div>
+        <div><h3>Choose a topic</h3><p>Pick a subject and a target length. A short script is written automatically for that topic.</p></div>
+      </div>
+      <div class="step">
+        <div class="n">2</div>
+        <div><h3>Generate voice and video</h3><p>Text-to-speech audio and background footage are combined into a finished, captioned vertical video.</p></div>
+      </div>
+      <div class="step">
+        <div class="n">3</div>
+        <div><h3>Review</h3><p>Every video is saved to a local folder for review. Nothing is published automatically.</p></div>
+      </div>
+      <div class="step">
+        <div class="n">4</div>
+        <div><h3>Publish</h3><p>Once the creator approves a video, it is posted to their connected TikTok account through TikTok's Content Posting API.</p></div>
+      </div>
+    </div>
+    <div class="who">
+      <p>Automation Upload connects only to the TikTok account of the person who installs and authorizes it. It does not access any other TikTok user's data, and nothing is published without that person's review and approval.</p>
+    </div>
+  </section>
+
+  <section id="privacy" class="legal">
+    <h2>Privacy policy</h2>
+    <p class="updated">Last updated September 27, 2026</p>
+    <p>This policy explains what Automation Upload does with data when it is connected to a TikTok account through TikTok's Content Posting API.</p>
+
+    <h3>Data we access</h3>
+    <p>Only what is needed to publish a video to the account holder's own TikTok profile: the OAuth access token and the basic profile information returned by TikTok's creator-info endpoint. We do not access, read, or collect data belonging to any other TikTok user.</p>
+
+    <h3>Data we store</h3>
+    <p>Access and refresh tokens are stored locally on the device running the app. They are not transmitted to any third-party server.</p>
+
+    <h3>Video content</h3>
+    <p>Scripts, audio, and video files are generated and stored locally. They are only sent to TikTok's servers at the moment the account holder chooses to publish a video.</p>
+
+    <h3>What we don't do</h3>
+    <ul>
+      <li>We don't sell data or share it with advertisers.</li>
+      <li>We don't use data for anything beyond publishing the account holder's own videos.</li>
+    </ul>
+
+    <h3>Contact</h3>
+    <p>Questions about this policy can be sent to <a href="mailto:ffinnland46@gmail.com">ffinnland46@gmail.com</a>.</p>
+
+    <h3>Changes</h3>
+    <p>If this policy changes, the date above will be updated.</p>
+  </section>
+
+  <section id="terms" class="legal">
+    <h2>Terms of service</h2>
+    <p class="updated">Last updated September 27, 2026</p>
+
+    <h3>Acceptance</h3>
+    <p>By using Automation Upload, you agree to these terms.</p>
+
+    <h3>What it does</h3>
+    <p>Automation Upload is a personal content-creation tool. It generates short-form videos from a topic you provide and, once you approve a video, publishes it to your own connected TikTok account.</p>
+
+    <h3>Your responsibility</h3>
+    <p>You are responsible for the content of every video you approve and publish, and for complying with TikTok's Community Guidelines and Terms of Service.</p>
+
+    <h3>No warranty</h3>
+    <p>Automation Upload is provided as-is, without warranty of any kind.</p>
+
+    <h3>Access</h3>
+    <p>Access to your connected TikTok account may be suspended at any time, for example if TikTok requests it.</p>
+
+    <h3>Changes</h3>
+    <p>These terms may be updated from time to time. Continued use means you accept the changes.</p>
+
+    <h3>Contact</h3>
+    <p>Questions can be sent to <a href="mailto:ffinnland46@gmail.com">ffinnland46@gmail.com</a>.</p>
+  </section>
+
+</main>
+
+<footer>
+  Automation Upload — a personal video creation and publishing tool.
+</footer>
+
+</body>
+</html>
