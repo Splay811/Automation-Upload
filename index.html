@@ -4,10 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Automation Upload</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<meta name="description" content="Free Windows app: plan, write, illustrate, voice and edit your own animated series with AI, review every episode and publish it to TikTok.">
 <style>
+  @font-face {
+    font-family: "Archivo Black";
+    src: url("fonts/ArchivoBlack-Regular.ttf") format("truetype");
+    font-display: swap;
+  }
   :root {
     --bg: #FAFAFC;
     --surface: #FFFFFF;
@@ -15,12 +18,10 @@
     --text-secondary: #5B5F77;
     --border: #E3E4EE;
     --accent: #4338CA;
-    --accent2: #0EA5E9;
-    --font-head: "Archivo", "Segoe UI", Arial, sans-serif;
-    --font-body: "Inter", "Segoe UI", Arial, sans-serif;
-    box-sizing: border-box;
-    padding-top: env(safe-area-inset-top, 0px);
-    padding-bottom: env(safe-area-inset-bottom, 0px);
+    --accent-text: #FFFFFF;
+    --accent-soft: #EEF0FF;
+    --font-head: "Archivo Black", "Segoe UI", Arial, sans-serif;
+    --font-body: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
@@ -30,7 +31,8 @@
       --text-secondary: #A8ABC2;
       --border: #262841;
       --accent: #8B85F0;
-      --accent2: #38BDF8;
+      --accent-text: #0B0C14;
+      --accent-soft: #1C1E3A;
     }
   }
   :root[data-theme="dark"] {
@@ -40,7 +42,8 @@
     --text-secondary: #A8ABC2;
     --border: #262841;
     --accent: #8B85F0;
-    --accent2: #38BDF8;
+    --accent-text: #0B0C14;
+    --accent-soft: #1C1E3A;
   }
   html { scroll-padding-top: 84px; }
   * { box-sizing: border-box; }
@@ -55,15 +58,15 @@
   a { color: var(--accent); }
   header.nav {
     position: sticky;
-    top: env(safe-area-inset-top, 0px);
+    top: 0;
     background: var(--bg);
     border-bottom: 0.5px solid var(--border);
     z-index: 10;
   }
   .nav-inner {
-    max-width: 760px;
+    max-width: 860px;
     margin: 0 auto;
-    padding: 14px 20px;
+    padding: 14px 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -75,65 +78,53 @@
     align-items: center;
     gap: 10px;
     font-family: var(--font-head);
-    font-weight: 700;
     font-size: 15px;
     text-decoration: none;
     color: var(--text-primary);
   }
   .brand svg { display: block; }
-  nav.links {
-    display: flex;
-    gap: 22px;
-    flex-wrap: wrap;
-  }
-  nav.links a {
-    font-size: 14px;
-    font-weight: 500;
-    text-decoration: none;
-    color: var(--text-secondary);
-  }
+  nav.links { display: flex; gap: 20px; flex-wrap: wrap; }
+  nav.links a { font-size: 14px; font-weight: 600; text-decoration: none; color: var(--text-secondary); }
   nav.links a:hover { color: var(--accent); }
-
-  main { max-width: 760px; margin: 0 auto; padding: 0 20px; }
-
+  main { max-width: 860px; margin: 0 auto; padding: 0 16px; }
   section { padding: 64px 0; border-bottom: 0.5px solid var(--border); }
   section:last-of-type { border-bottom: none; }
-
   .hero h1 {
     font-family: var(--font-head);
-    font-weight: 800;
-    font-size: clamp(34px, 6vw, 48px);
+    font-weight: 400;
+    font-size: clamp(32px, 6vw, 50px);
     line-height: 1.08;
     margin: 0 0 18px;
-    letter-spacing: -0.01em;
+    max-width: 18ch;
   }
-  .hero .lede {
-    font-size: 19px;
-    color: var(--text-secondary);
-    max-width: 58ch;
-    margin: 0 0 20px;
-  }
-  .hero p { max-width: 66ch; }
-
-  h2 {
-    font-family: var(--font-head);
-    font-weight: 700;
-    font-size: 26px;
-    margin: 0 0 28px;
-  }
-  h3 {
-    font-family: var(--font-head);
+  .lede { font-size: 19px; color: var(--text-secondary); max-width: 58ch; margin: 0 0 26px; }
+  .actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 22px;
+    border-radius: 10px;
     font-weight: 700;
     font-size: 16px;
-    margin: 0 0 8px;
+    text-decoration: none;
+    border: 1px solid var(--accent);
   }
-
+  .btn.primary { background: var(--accent); color: var(--accent-text); }
+  .btn.secondary { background: transparent; color: var(--accent); }
+  .meta { font-size: 13px; color: var(--text-secondary); margin: 14px 0 0; }
+  h2 { font-family: var(--font-head); font-weight: 400; font-size: 26px; margin: 0 0 28px; }
+  h3 { font-size: 16px; font-weight: 700; margin: 0 0 6px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .card {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+  .card p { margin: 0; color: var(--text-secondary); font-size: 15px; }
   .steps { display: flex; flex-direction: column; gap: 22px; }
-  .step {
-    display: flex;
-    gap: 16px;
-    align-items: flex-start;
-  }
+  .step { display: flex; gap: 16px; align-items: flex-start; }
   .step .n {
     flex: none;
     width: 30px; height: 30px;
@@ -141,38 +132,36 @@
     background: var(--surface);
     border: 1px solid var(--border);
     color: var(--accent);
-    font-family: var(--font-head);
     font-weight: 700;
     font-size: 13px;
     display: flex; align-items: center; justify-content: center;
   }
-  .step p { margin: 4px 0 0; color: var(--text-secondary); max-width: 60ch; }
-
-  .who {
-    margin-top: 36px;
-    padding: 20px 22px;
-    background: var(--surface);
-    border: 0.5px solid var(--border);
-    border-radius: 10px;
+  .step p { margin: 4px 0 0; color: var(--text-secondary); max-width: 62ch; }
+  .note {
+    margin-top: 32px;
+    padding: 18px 22px;
+    background: var(--accent-soft);
+    border-radius: 12px;
   }
-  .who p { margin: 0; color: var(--text-secondary); }
-
-  .legal p, .legal li { color: var(--text-secondary); max-width: 68ch; }
+  .note p { margin: 0; }
+  .download { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-top: 22px; }
+  .download ul { margin: 6px 0 0; padding-left: 20px; color: var(--text-secondary); font-size: 15px; }
+  .download li { margin: 3px 0; }
+  .legal p, .legal li { color: var(--text-secondary); max-width: 70ch; }
   .legal ul { padding-left: 20px; }
   .legal h3 { color: var(--text-primary); margin-top: 26px; }
   .updated { font-size: 13px; color: var(--text-secondary); margin: -18px 0 26px; }
-
   footer {
-    max-width: 760px;
+    max-width: 860px;
     margin: 0 auto;
-    padding: 40px 20px 60px;
+    padding: 40px 16px 60px;
     font-size: 13px;
     color: var(--text-secondary);
   }
-
   @media (max-width: 480px) {
     nav.links { gap: 14px; }
     section { padding: 44px 0; }
+    .btn { width: 100%; justify-content: center; }
   }
 </style>
 </head>
@@ -181,12 +170,13 @@
 <header class="nav">
   <div class="nav-inner">
     <a class="brand" href="#overview">
-      <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="11" fill="var(--accent)"/><path d="M11 6 L15 11 L12.3 11 L12.3 16 L9.7 16 L9.7 11 L7 11 Z" fill="white"/></svg>
+      <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><rect width="22" height="22" rx="5" fill="var(--accent)"/><path d="M11 5 L16.5 11.4 L13 11.4 L13 17 L9 17 L9 11.4 L5.5 11.4 Z" fill="#fff"/></svg>
       Automation Upload
     </a>
     <nav class="links">
-      <a href="#overview">Overview</a>
+      <a href="#features">Features</a>
       <a href="#how-it-works">How it works</a>
+      <a href="#download">Download</a>
       <a href="#privacy">Privacy</a>
       <a href="#terms">Terms</a>
     </nav>
@@ -196,93 +186,146 @@
 <main>
 
   <section id="overview" class="hero">
-    <h1>Automation Upload</h1>
-    <p class="lede">A desktop tool that turns a short topic into a finished vertical video — script, voiceover, and captions — held for review before anything is published.</p>
-    <p>Automation Upload runs locally on the creator's own computer. It writes a short script for a chosen topic, generates a voiceover, and assembles a captioned, vertical-format video. Every video is saved to a local folder first; nothing is published until the creator reviews and approves it.</p>
+    <h1>Your own animated series, made on your PC.</h1>
+    <p class="lede">Automation Upload plans, writes, illustrates, voices and edits episodes of your own animated series with AI.
+      You review every episode and publish it to TikTok with one click &mdash; nothing goes online without you.</p>
+    <div class="actions">
+      <a class="btn primary" href="https://github.com/Splay811/Automation-Upload/releases/latest/download/AutomationUpload-Setup.exe">
+        <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 2v9m0 0l-4-4m4 4l4-4M3 14h12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Download for Windows &mdash; free
+      </a>
+      <a class="btn secondary" href="#how-it-works">How it works</a>
+    </div>
+    <p class="meta">Windows 10 / 11 (64-bit) &middot; free &middot; works with your own AI accounts &middot; <a href="https://github.com/Splay811/Automation-Upload/releases">all versions</a></p>
+  </section>
+
+  <section id="features">
+    <h2>What it does</h2>
+    <div class="grid">
+      <div class="card"><h3>Series planning</h3><p>A season plan with recurring main characters. Every episode picks up where the last one ended.</p></div>
+      <div class="card"><h3>Scripts you control</h3><p>Read and edit each script as plain text before anything is produced, or let the app approve checked scripts for you.</p></div>
+      <div class="card"><h3>Consistent illustrations</h3><p>Character sheets keep faces and outfits the same in every scene. Rejected images are retried and rephrased automatically.</p></div>
+      <div class="card"><h3>Voices, music and sound</h3><p>A voice for every character (ElevenLabs or free Microsoft Edge voices), background music and sound effects.</p></div>
+      <div class="card"><h3>Finished videos</h3><p>Fast cuts, readable captions, a cover image and normalized loudness &mdash; vertical 9:16 or wide 16:9.</p></div>
+      <div class="card"><h3>Publish after review</h3><p>Edit title and hashtags, choose who can see the video and post it to your TikTok account. YouTube upload packages included.</p></div>
+    </div>
   </section>
 
   <section id="how-it-works">
     <h2>How it works</h2>
     <div class="steps">
-      <div class="step">
-        <div class="n">1</div>
-        <div><h3>Choose a topic</h3><p>Pick a subject and a target length. A short script is written automatically for that topic.</p></div>
-      </div>
-      <div class="step">
-        <div class="n">2</div>
-        <div><h3>Generate voice and video</h3><p>Text-to-speech audio and background footage are combined into a finished, captioned vertical video.</p></div>
-      </div>
-      <div class="step">
-        <div class="n">3</div>
-        <div><h3>Review</h3><p>Every video is saved to a local folder for review. Nothing is published automatically.</p></div>
-      </div>
-      <div class="step">
-        <div class="n">4</div>
-        <div><h3>Publish</h3><p>Once the creator approves a video, it is posted to their connected TikTok account through TikTok's Content Posting API.</p></div>
-      </div>
+      <div class="step"><div class="n">1</div><div><h3>Install and add your keys</h3><p>Install the app and paste your API keys for Anthropic (scripts) and OpenRouter (images). ElevenLabs is optional. You pay these services directly for what you use; the app shows the cost of every episode.</p></div></div>
+      <div class="step"><div class="n">2</div><div><h3>Plan a series</h3><p>Describe your idea, main characters and style. The app writes a season plan and the scripts.</p></div></div>
+      <div class="step"><div class="n">3</div><div><h3>Review and produce</h3><p>Check the scripts, change what you like and start production. Images, voices, sound and editing happen on your PC.</p></div></div>
+      <div class="step"><div class="n">4</div><div><h3>Publish</h3><p>Open &ldquo;Manage posts&rdquo;, watch the episode, edit the caption, pick the privacy level and click &ldquo;Publish to TikTok&rdquo;.</p></div></div>
     </div>
-    <div class="who">
-      <p>Automation Upload connects only to the TikTok account of the person who installs and authorizes it. It does not access any other TikTok user's data, and nothing is published without that person's review and approval.</p>
+    <div class="note">
+      <p>Automation Upload connects only to the TikTok account of the person who installs it and signs in. It uses TikTok&rsquo;s Login Kit (<code>user.info.basic</code>) to show which account you post to and the Content Posting API (<code>video.publish</code>) to upload the videos you approve. It never accesses other users&rsquo; data, and nothing is posted without your click.</p>
+    </div>
+  </section>
+
+  <section id="download">
+    <h2>Download</h2>
+    <div class="actions">
+      <a class="btn primary" href="https://github.com/Splay811/Automation-Upload/releases/latest/download/AutomationUpload-Setup.exe">Download AutomationUpload-Setup.exe</a>
+    </div>
+    <div class="download">
+      <div class="card">
+        <h3>You need</h3>
+        <ul>
+          <li>Windows 10 or 11, 64-bit, about 1&nbsp;GB free space</li>
+          <li>An API key from <a href="https://console.anthropic.com">Anthropic</a> and <a href="https://openrouter.ai/keys">OpenRouter</a></li>
+          <li>Optional: an <a href="https://elevenlabs.io">ElevenLabs</a> key for premium voices</li>
+          <li>A TikTok account to publish (optional)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Install and update</h3>
+        <ul>
+          <li>Run the installer &mdash; no administrator rights needed.</li>
+          <li>If Windows shows &ldquo;Windows protected your PC&rdquo;, click <em>More info</em> &rarr; <em>Run anyway</em> (the installer is not code-signed).</li>
+          <li>The app tells you when a new version is out. Install it over the old one; your series, videos and settings stay.</li>
+          <li>Uninstall via Windows Settings &rarr; Apps.</li>
+        </ul>
+      </div>
     </div>
   </section>
 
   <section id="privacy" class="legal">
     <h2>Privacy policy</h2>
-    <p class="updated">Last updated September 27, 2026</p>
-    <p>This policy explains what Automation Upload does with data when it is connected to a TikTok account through TikTok's Content Posting API.</p>
+    <p class="updated">Last updated October 18, 2026</p>
+    <p>Automation Upload is a program that runs on your own computer. We do not run servers that collect or store your data, we use no analytics or tracking, and we do not sell data.</p>
 
-    <h3>Data we access</h3>
-    <p>Only what is needed to publish a video to the account holder's own TikTok profile: the OAuth access token and the basic profile information returned by TikTok's creator-info endpoint. We do not access, read, or collect data belonging to any other TikTok user.</p>
+    <h3>Data on your computer</h3>
+    <p>Your API keys, TikTok sign-in tokens, series, scripts, images, audio, videos, settings and post status are stored only on your computer, in the program folder. You can delete them at any time by deleting that folder.</p>
 
-    <h3>Data we store</h3>
-    <p>Access and refresh tokens are stored locally on the device running the app. They are not transmitted to any third-party server.</p>
+    <h3>AI services you choose</h3>
+    <p>When you produce episodes, the program sends prompts, scripts and images directly from your computer to the services you configured with your own keys: Anthropic (scripts and checks), OpenRouter (images; it forwards requests to image model providers), ElevenLabs (voices) or Microsoft Edge text-to-speech (free voices). Their privacy policies apply. We do not receive this data.</p>
 
-    <h3>Video content</h3>
-    <p>Scripts, audio, and video files are generated and stored locally. They are only sent to TikTok's servers at the moment the account holder chooses to publish a video.</p>
-
-    <h3>What we don't do</h3>
+    <h3>TikTok</h3>
     <ul>
-      <li>We don't sell data or share it with advertisers.</li>
-      <li>We don't use data for anything beyond publishing the account holder's own videos.</li>
+      <li>When you connect TikTok, you sign in on TikTok&rsquo;s own website. The program receives the basic profile information TikTok returns (nickname, username, avatar, allowed privacy levels) only to show which account you post to.</li>
+      <li>Videos, titles and settings are sent to TikTok only when you click &ldquo;Publish to TikTok&rdquo;. The program then asks TikTok for the publishing status.</li>
+      <li>To sign you in, the program exchanges a one-time authorization code (and later refresh tokens) for access tokens. Because TikTok&rsquo;s app secret must not be shipped inside the program, this exchange passes through a small token service we run on Cloudflare Workers. It adds the secret, forwards the request to TikTok and returns the answer to your computer. It does not store or log codes or tokens. Cloudflare processes connection data such as your IP address to deliver the service.</li>
+      <li>We do not access data of any other TikTok user. You can disconnect in the program and revoke access in your TikTok settings at any time.</li>
     </ul>
 
-    <h3>Contact</h3>
-    <p>Questions about this policy can be sent to <a href="mailto:ffinnland46@gmail.com">ffinnland46@gmail.com</a>.</p>
+    <h3>YouTube</h3>
+    <p>By default the program creates upload packages that you upload yourself in YouTube Studio. If you connect YouTube with your own Google API credentials, uploads go directly from your computer to YouTube and Google&rsquo;s privacy policy applies.</p>
 
-    <h3>Changes</h3>
-    <p>If this policy changes, the date above will be updated.</p>
+    <h3>Update check</h3>
+    <p>When the program starts, it asks GitHub&rsquo;s public API for the latest version number. GitHub can see your IP address. No other data is sent.</p>
+
+    <h3>This website</h3>
+    <p>This website is hosted on GitHub Pages. GitHub may process access data such as your IP address in server logs. The website sets no cookies, uses no tracking and loads no fonts or scripts from other servers. Downloads are served by GitHub.</p>
+
+    <h3>Legal basis and your rights</h3>
+    <p>The token service processes data to provide the sign-in you request (Art. 6(1)(b) GDPR); hosting logs and the update check are based on our legitimate interest in a secure, up-to-date program (Art. 6(1)(f) GDPR). You have the right to access, rectification, erasure, restriction of processing, data portability and objection, and you can complain to a data protection supervisory authority.</p>
+
+    <h3>Contact</h3>
+    <p>Questions about this policy: <a href="mailto:ffinnland46@gmail.com">ffinnland46@gmail.com</a>. If this policy changes, the date above is updated.</p>
   </section>
 
   <section id="terms" class="legal">
     <h2>Terms of service</h2>
-    <p class="updated">Last updated September 27, 2026</p>
+    <p class="updated">Last updated October 18, 2026</p>
 
-    <h3>Acceptance</h3>
-    <p>By using Automation Upload, you agree to these terms.</p>
+    <h3>1. The software</h3>
+    <p>Automation Upload is a free desktop program for Windows. It helps you write, illustrate, voice and edit episodes of your own animated series, publish them to your own TikTok account and prepare uploads for YouTube. It is provided free of charge.</p>
 
-    <h3>What it does</h3>
-    <p>Automation Upload is a personal content-creation tool. It generates short-form videos from a topic you provide and, once you approve a video, publishes it to your own connected TikTok account.</p>
+    <h3>2. License</h3>
+    <p>You may install and use Automation Upload on your own computers to create content, including content you earn money with. You may not sell, rent or redistribute the program or modified copies of it, and you may not remove these terms or the third-party notices. Included third-party components (Python, FFmpeg, fonts) are licensed under their own licenses, listed in THIRD_PARTY_NOTICES.txt.</p>
 
-    <h3>Your responsibility</h3>
-    <p>You are responsible for the content of every video you approve and publish, and for complying with TikTok's Community Guidelines and Terms of Service.</p>
+    <h3>3. Your accounts and costs</h3>
+    <p>The program uses AI services that you sign up for yourself (for example Anthropic, OpenRouter and ElevenLabs) with your own API keys. You pay these providers directly according to their prices. Costs shown in the program are estimates. Keep your keys secret and follow the terms of these providers.</p>
 
-    <h3>No warranty</h3>
-    <p>Automation Upload is provided as-is, without warranty of any kind.</p>
+    <h3>4. Your content</h3>
+    <p>You own and are responsible for everything you create and publish with the program. Review every video before you publish it, follow the TikTok Terms of Service and Community Guidelines, the YouTube Terms of Service and the law, label AI-generated content where required, and only add material you have the rights to. Nothing is published unless you explicitly click to publish it.</p>
 
-    <h3>Access</h3>
-    <p>Access to your connected TikTok account may be suspended at any time, for example if TikTok requests it.</p>
+    <h3>5. TikTok</h3>
+    <p>Publishing uses TikTok&rsquo;s Content Posting API on your behalf after you connected your account. TikTok can limit or end this access at any time. You can disconnect in the program at any time and revoke access in your TikTok settings.</p>
 
-    <h3>Changes</h3>
-    <p>These terms may be updated from time to time. Continued use means you accept the changes.</p>
+    <h3>6. No warranty</h3>
+    <p>The program is provided &ldquo;as is&rdquo;. We do not guarantee that it works without errors or interruptions, that generated content is suitable for your purpose, or that platforms accept, keep or promote your videos.</p>
 
-    <h3>Contact</h3>
-    <p>Questions can be sent to <a href="mailto:ffinnland46@gmail.com">ffinnland46@gmail.com</a>.</p>
+    <h3>7. Liability</h3>
+    <p>Because the program is free, we are only liable for intent and gross negligence. Liability that cannot be excluded by law (for example for injury to life, body or health, or under product liability law) remains unaffected.</p>
+
+    <h3>8. Changes</h3>
+    <p>We may update the program and these terms. If you keep using the program after an update, the updated terms apply. You can stop using the program and uninstall it at any time.</p>
+
+    <h3>9. Applicable law</h3>
+    <p>German law applies, excluding the UN Convention on Contracts for the International Sale of Goods. Mandatory consumer protection rules of the country you live in remain unaffected.</p>
+
+    <h3>10. Contact</h3>
+    <p><a href="mailto:ffinnland46@gmail.com">ffinnland46@gmail.com</a></p>
   </section>
 
 </main>
 
 <footer>
-  Automation Upload — a personal video creation and publishing tool.
+  Automation Upload &mdash; free software for creating and publishing your own animated series.
+  &middot; <a href="#privacy">Privacy</a> &middot; <a href="#terms">Terms</a> &middot; <a href="mailto:ffinnland46@gmail.com">Contact</a>
 </footer>
 
 </body>
